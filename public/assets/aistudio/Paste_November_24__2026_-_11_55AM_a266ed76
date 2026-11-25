@@ -1,0 +1,1941 @@
+WEB DESIGNER AI PRO — MASTER PROMPT 2026
+
+
+PLATAFORMA IMOBILIÁRIA PREMIUM COM INTELIGÊNCIA ARTIFICIAL, EXPERIÊNCIA CINEMATOGRÁFICA E AUTOMAÇÃO COMPLETA
+
+
+Projeto-base: @ivyoliveiraimoveis
+Ambiente de desenvolvimento: Google AI Studio
+Hospedagem: Vercel
+Banco de dados: Firebase Firestore
+Autenticação: Firebase Authentication
+Armazenamento: Vercel Blob
+Frontend: React + TypeScript
+Animações: GSAP, ScrollTrigger, Motion e bibliotecas especializadas.
+
+
+---
+
+
+PARTE 1 — ARQUITETURA, IDENTIDADE E INTELIGÊNCIA VISUAL
+
+
+1.1 — PAPEL DA INTELIGÊNCIA ARTIFICIAL
+
+
+Atue como uma equipe multidisciplinar formada por:
+
+
+Engenheiros Full Stack.
+Arquitetos de software.
+Especialistas em React e TypeScript.
+Especialistas em Firebase.
+Especialistas em Vercel.
+Especialistas em inteligência artificial generativa.
+Diretores de arte digital.
+Especialistas em UX/UI.
+Especialistas em animações cinematográficas.
+Especialistas em marketing imobiliário.
+Especialistas em SEO.
+Especialistas em segurança e LGPD.
+Sua missão é construir um site imobiliário completo, profissional, funcional e preparado para produção.
+
+
+O resultado deve parecer desenvolvido por uma agência internacional especializada em experiências digitais de alto padrão.
+
+
+Não quero um site com aparência de template gerado automaticamente.
+
+
+Não quero uma interface com aparência genérica de inteligência artificial.
+
+
+Quero um projeto com identidade visual própria, acabamento profissional, movimentos naturais e uma experiência que impressione o visitante.
+
+
+1.2 — REGRA PRINCIPAL DO PRODUTO
+
+
+O produto principal é um SITE IMOBILIÁRIO PÚBLICO.
+
+
+Não transforme o projeto em um CRM independente, SaaS comercial ou software de gestão separado.
+
+
+O painel administrativo existe exclusivamente para administrar o site público e seus conteúdos.
+
+
+O site deverá funcionar de maneira independente depois de publicado.
+
+
+O proprietário deverá conseguir administrar praticamente tudo sem precisar alterar código.
+
+
+1.3 — ESTRUTURA REUTILIZÁVEL
+
+
+Crie uma arquitetura reutilizável para que o mesmo projeto possa ser utilizado em diferentes clientes.
+
+
+O desenvolvedor deverá conseguir alterar:
+
+
+Nome do corretor.
+Nome comercial.
+Logotipo.
+Fotografias.
+Identidade visual.
+Cores.
+Tipografia.
+WhatsApp.
+Telefone.
+E-mail.
+CRECI.
+Cidade.
+Regiões de atuação.
+Domínio.
+Redes sociais.
+Textos institucionais.
+Essas informações deverão ser configuráveis.
+
+
+Não espalhe informações específicas do corretor diretamente pelos componentes.
+
+
+Centralize as configurações e utilize os dados armazenados no Firebase.
+
+
+O projeto deverá permitir que cada cliente tenha seu próprio site, identidade visual, domínio e administração.
+
+
+1.4 — INVESTIGAÇÃO DO INSTAGRAM
+
+
+Utilize como referência principal:
+
+https://www.instagram.com/ivyoliveiraimoveisrj?avpt=Y25waXZ3cnltaGx1
+
+
+Investigue as informações públicas disponíveis.
+
+
+Identifique:
+
+
+Identidade profissional.
+Nome comercial.
+Logotipo.
+Fotografia.
+Biografia.
+CRECI, se publicado.
+Cidade.
+Regiões de atuação.
+Tipos de imóveis.
+Imóveis anunciados.
+Empreendimentos.
+Diferenciais comerciais.
+Redes sociais.
+Informações de contato.
+Identidade visual.
+Não invente informações.
+
+
+Não crie imóveis fictícios.
+
+
+Não invente depoimentos, qualificações, registros ou números de telefone.
+
+
+Caso não seja possível acessar o Instagram, deixe os campos preparados para preenchimento administrativo.
+
+
+Não utilize scraping que viole as regras da plataforma.
+
+
+1.5 — IDENTIDADE VISUAL PREMIUM
+
+
+Crie uma identidade visual sofisticada.
+
+
+A aparência deverá transmitir:
+
+
+Exclusividade.
+Confiança.
+Segurança.
+Elegância.
+Modernidade.
+Credibilidade.
+Profissionalismo.
+Utilize fotografias imobiliárias de alta qualidade.
+
+
+Trabalhe com hierarquia tipográfica refinada, espaços negativos, composição editorial e elementos visuais sofisticados.
+
+
+O design deverá ser original e adaptável à identidade de cada corretor.
+
+
+1.6 — SISTEMA DE TEMAS
+
+
+Permita que o administrador configure:
+
+
+Cor principal.
+Cor secundária.
+Cor de destaque.
+Fundo.
+Cor dos textos.
+Tipografia dos títulos.
+Tipografia dos textos.
+Estilo dos botões.
+Estilo dos cards.
+Bordas.
+Sombras.
+Gradientes.
+Logotipo.
+Favicon.
+Disponibilize temas profissionais, como:
+
+
+Luxo contemporâneo.
+Minimalista premium.
+Imobiliário moderno.
+Elegância clássica.
+Arquitetura editorial.
+As alterações devem refletir no site sem necessidade de modificar código.
+
+
+---
+
+
+PARTE 2 — SITE PÚBLICO E EXPERIÊNCIA CINEMATOGRÁFICA
+
+
+2.1 — PÁGINA INICIAL
+
+
+Desenvolva uma página inicial extremamente profissional.
+
+
+Não utilize um banner comum e estático.
+
+
+Crie uma experiência de apresentação cinematográfica.
+
+
+Elementos obrigatórios:
+
+
+Cabeçalho elegante.
+Logotipo.
+Menu moderno.
+Banner de grande impacto.
+Imagem ou vídeo de destaque.
+Texto principal animado.
+Botão de busca.
+Botão de WhatsApp.
+Busca rápida.
+Imóveis em destaque.
+Lançamentos.
+Apresentação do corretor.
+Regiões atendidas.
+Diferenciais.
+Depoimentos reais.
+Chamada para atendimento.
+Rodapé completo.
+2.2 — EFEITOS NO BANNER PRINCIPAL
+
+
+Utilize animações profissionais:
+
+
+Entrada cinematográfica da imagem.
+Zoom progressivo.
+Parallax.
+Texto aparecendo suavemente.
+Máscaras de revelação.
+Transições entre imagens.
+Iluminação discreta.
+Elementos com profundidade.
+Botões com microinterações.
+Movimento suave do fundo.
+Não utilize efeitos exagerados.
+
+
+A imagem do imóvel deve ser o protagonista.
+
+
+2.3 — EXPERIÊNCIA DURANTE A ROLAGEM
+
+
+Esta é uma das prioridades do projeto.
+
+
+Quero que o visitante tenha uma experiência semelhante à de sites premiados de arquitetura, imobiliárias internacionais e empresas de tecnologia.
+
+
+Quando o visitante rolar a página:
+
+
+Os títulos deverão aparecer progressivamente.
+As fotografias deverão ser reveladas com animações.
+Os cards deverão entrar com movimentos naturais.
+Os elementos poderão apresentar profundidade.
+Os fundos poderão se movimentar discretamente.
+As imagens poderão apresentar parallax.
+Os textos poderão aparecer em sequência.
+Os elementos deverão responder ao movimento da página.
+As seções deverão apresentar transições suaves.
+Utilize GSAP e ScrollTrigger quando forem apropriados.
+
+
+Não aplique animações idênticas em todas as seções.
+
+
+Cada área deverá ter uma composição visual própria.
+
+
+2.4 — CATÁLOGO DE IMÓVEIS
+
+
+Crie um catálogo moderno e dinâmico.
+
+
+Cada card deverá apresentar:
+
+
+Fotografia principal.
+Nome do imóvel.
+Preço.
+Localização.
+Tipo de negociação.
+Área.
+Quartos.
+Suítes.
+Banheiros.
+Vagas.
+Código.
+Botão de detalhes.
+Botão de WhatsApp.
+Adicione:
+
+
+Hover sofisticado.
+Zoom suave nas fotografias.
+Transições.
+Sombras dinâmicas.
+Revelação progressiva.
+Layout responsivo.
+2.5 — FILTROS
+
+
+Implementar filtros reais:
+
+
+Venda.
+Aluguel.
+Lançamentos.
+Casas.
+Apartamentos.
+Terrenos.
+Imóveis comerciais.
+Cidade.
+Bairro.
+Faixa de preço.
+Quartos.
+Suítes.
+Vagas.
+Área.
+Condomínio.
+A busca deverá consultar os dados reais do Firestore.
+
+
+Não criar filtros decorativos que não funcionam.
+
+
+2.6 — PÁGINA INDIVIDUAL DO IMÓVEL
+
+
+Cada imóvel deverá ter uma página exclusiva.
+
+
+Exemplo:
+
+
+/imovel/casa-alto-padrao-centro
+
+
+Incluir:
+
+
+Galeria de fotografias.
+Imagem principal de grande impacto.
+Vídeos.
+Informações técnicas.
+Descrição.
+Diferenciais.
+Mapa, quando autorizado.
+Formulário.
+WhatsApp.
+Compartilhamento.
+Imóveis semelhantes.
+A página deverá possuir SEO individual.
+
+
+2.7 — GALERIAS PROFISSIONAIS
+
+
+Desenvolva galerias com:
+
+
+Navegação por setas.
+Navegação por gestos no celular.
+Miniaturas.
+Tela cheia.
+Zoom.
+Transições suaves.
+Carregamento otimizado.
+Pré-carregamento inteligente.
+Não distorça as fotografias originais.
+
+
+2.8 — PÁGINA SOBRE O CORRETOR
+
+
+Apresente o profissional com:
+
+
+Fotografia.
+Nome.
+História.
+Experiência confirmada.
+CRECI.
+Especialidades.
+Regiões.
+Diferenciais.
+Redes sociais.
+Contato.
+Não invente informações profissionais.
+
+
+2.9 — EMPREENDIMENTOS
+
+
+Criar páginas individuais para:
+
+
+Lançamentos.
+Condomínios.
+Incorporadoras.
+Projetos residenciais.
+Projetos comerciais.
+Cada empreendimento deverá permitir galeria, plantas, vídeos, descrição, informações técnicas e formulário.
+
+
+2.10 — LANDING PAGES
+
+
+O administrador deverá conseguir selecionar um imóvel e gerar uma página comercial automaticamente.
+
+
+Exemplo:
+
+
+/oferta/empreendimento-exclusivo
+
+
+Permitir:
+
+
+Criar.
+Editar.
+Duplicar.
+Publicar.
+Despublicar.
+Excluir.
+Copiar URL.
+Consultar acessos.
+Consultar leads.
+Cada landing page deverá ter identidade visual profissional e SEO próprio.
+
+
+---
+
+
+PARTE 3 — INTELIGÊNCIA ARTIFICIAL PARA IMÓVEIS, FOTOGRAFIAS E VISITAS VIRTUAIS
+
+
+3.1 — OBJETIVO PRINCIPAL
+
+
+Esta é uma das funcionalidades mais importantes de todo o projeto.
+
+
+Quero que o corretor consiga cadastrar um imóvel, enviar suas fotografias e utilizar recursos de inteligência artificial para criar uma apresentação imobiliária extremamente impressionante.
+
+
+O processo deverá acontecer diretamente pelo painel administrativo.
+
+
+O corretor não deverá precisar acessar outro programa para fazer a apresentação básica do imóvel.
+
+
+3.2 — FLUXO AUTOMÁTICO
+
+
+Criar o seguinte processo:
+
+
+1. O corretor acessa o painel.
+2. Clica em cadastrar imóvel.
+3. Preenche as informações.
+4. Envia as fotografias.
+5. A inteligência artificial analisa as imagens.
+6. A IA identifica os ambientes visíveis.
+7. A IA sugere descrições comerciais.
+8. A IA organiza as fotografias.
+9. O sistema prepara a apresentação visual.
+10. O corretor revisa o conteúdo.
+11. Clica em salvar.
+12. O imóvel é armazenado no Firebase.
+13. As fotografias são armazenadas no Vercel Blob.
+14. O imóvel aparece automaticamente no site público após publicação.
+
+
+Não exigir que o desenvolvedor altere o código para cadastrar novos imóveis.
+
+
+3.3 — ANÁLISE INTELIGENTE DAS FOTOGRAFIAS
+
+
+Utilize um modelo multimodal de IA para analisar fotografias.
+
+
+A IA poderá identificar, quando visualmente possível:
+
+
+Sala.
+Cozinha.
+Quartos.
+Banheiros.
+Varandas.
+Fachadas.
+Piscinas.
+Jardins.
+Garagens.
+Áreas de lazer.
+Acabamentos.
+Revestimentos.
+Iluminação.
+Elementos arquitetônicos.
+A IA deverá produzir sugestões de classificação e descrição.
+
+
+Não inventar:
+
+
+Metragem.
+Quantidade de quartos.
+Quantidade de banheiros.
+Endereço.
+Materiais não identificáveis.
+Equipamentos.
+Características que não aparecem nas imagens.
+Os dados técnicos informados pelo corretor devem ter prioridade.
+
+
+A análise deverá ser apresentada para revisão antes da publicação.
+
+
+3.4 — MELHORIA VISUAL DE FOTOGRAFIAS
+
+
+Criar um recurso de aprimoramento de imagens.
+
+
+Permitir:
+
+
+Melhorar iluminação.
+Ajustar exposição.
+Melhorar nitidez.
+Corrigir balanço de branco.
+Reduzir ruído.
+Melhorar contraste.
+Otimizar resolução.
+Corrigir enquadramento.
+Preservar a aparência real do imóvel.
+
+
+Nunca modificar estruturalmente um imóvel sem autorização explícita.
+
+
+Não transformar uma sala pequena em uma sala grande.
+
+
+Não adicionar janelas, portas ou ambientes inexistentes.
+
+
+Quando houver edição generativa, identificar o resultado como imagem ilustrativa ou editada.
+
+
+Sempre preservar a fotografia original.
+
+
+3.5 — CRIAÇÃO AUTOMÁTICA DE VÍDEOS
+
+
+Criar uma ferramenta chamada:
+
+
+AI PROPERTY CINEMATIC
+
+
+O recurso deverá permitir transformar fotografias em apresentações de vídeo.
+
+
+O corretor poderá:
+
+
+1. Selecionar as fotografias.
+2. Escolher o estilo.
+3. Escolher a duração.
+4. Selecionar formato vertical ou horizontal.
+5. Solicitar a geração.
+6. Visualizar o resultado.
+7. Aprovar.
+8. Salvar no imóvel.
+
+
+Estilos disponíveis:
+
+
+Cinematográfico de luxo.
+Arquitetura moderna.
+Tour imobiliário.
+Apresentação comercial.
+Minimalista.
+Lançamento imobiliário.
+Criar movimentos de câmera simulados com:
+
+
+Zoom progressivo.
+Travelling digital.
+Movimentos panorâmicos.
+Profundidade.
+Transições.
+Efeitos de iluminação.
+Sequências entre fotografias.
+3.6 — INTEGRAÇÃO COM GERAÇÃO DE VÍDEOS POR IA
+
+
+Preparar uma arquitetura para integrar provedores reais de geração de vídeo.
+
+
+Avaliar tecnologias disponíveis do ecossistema Google, incluindo modelos de geração de vídeo disponibilizados pelo Vertex AI, como Veo, conforme disponibilidade, acesso e condições comerciais.
+
+
+A integração deverá acontecer por meio do backend.
+
+
+Não colocar chaves de API no navegador.
+
+
+Criar:
+
+
+Endpoint seguro.
+Fila de processamento.
+Controle de tarefas.
+Status de geração.
+Tratamento de erros.
+Limite de duração.
+Controle de custos.
+Armazenamento do vídeo final.
+Histórico de gerações.
+O sistema deverá informar quando uma geração estiver:
+
+
+Aguardando.
+Em processamento.
+Concluída.
+Falhou.
+Cancelada.
+Não simular vídeos gerados por IA.
+
+
+Se não houver credenciais, deixar a integração preparada e informar exatamente como ativá-la.
+
+
+3.7 — VISITA VIRTUAL
+
+
+Criar um recurso chamado:
+
+
+AI VIRTUAL TOUR
+
+
+O objetivo é permitir que o visitante conheça melhor os ambientes do imóvel.
+
+
+Criar três modalidades:
+
+
+MODALIDADE A — TOUR FOTOGRÁFICO INTELIGENTE
+
+
+Organizar as fotografias por ambiente.
+
+
+Permitir navegação entre:
+
+
+Sala.
+Cozinha.
+Quartos.
+Banheiros.
+Varanda.
+Área externa.
+Criar transições suaves e uma experiência de navegação contínua.
+
+
+MODALIDADE B — TOUR 360°
+
+
+Permitir que o corretor envie fotografias panorâmicas de 360 graus.
+
+
+Criar um visualizador panorâmico interativo.
+
+
+Permitir:
+
+
+Girar a visão.
+Aproximar.
+Afastar.
+Navegar entre ambientes.
+Utilizar pontos de navegação.
+Abrir tela cheia.
+MODALIDADE C — EXPERIÊNCIA 3D
+
+
+Preparar suporte para visualização 3D e reconstrução de ambientes utilizando tecnologias compatíveis, incluindo Three.js e serviços especializados de captura ou reconstrução 3D.
+
+
+Quando houver imagens suficientes e tecnologia compatível, permitir experiências espaciais mais avançadas.
+
+
+IMPORTANTE:
+
+
+Uma fotografia comum não permite reconstruir com fidelidade garantida todos os cômodos de um imóvel.
+
+
+Não apresente ambientes imaginados pela IA como se fossem uma reprodução real.
+
+
+Vídeos generativos deverão ser identificados como apresentações ilustrativas quando puderem alterar detalhes da propriedade.
+
+
+Para uma visita virtual fiel, priorize fotografias 360°, vídeos reais ou modelos 3D capturados do imóvel.
+
+
+3.8 — BOTÃO DE VISITA VIRTUAL
+
+
+Na página individual do imóvel, inserir um botão destacado:
+
+
+FAZER VISITA VIRTUAL
+
+
+Ao clicar, abrir a experiência correspondente ao material disponível.
+
+
+Se o imóvel possuir apenas fotografias comuns, apresentar o tour fotográfico.
+
+
+Se possuir imagens 360°, disponibilizar navegação panorâmica.
+
+
+Se possuir modelo 3D, disponibilizar a visualização correspondente.
+
+
+Não exibir botão sem funcionalidade.
+
+
+3.9 — IA PARA DESCRIÇÕES IMOBILIÁRIAS
+
+
+Criar um gerador de descrições.
+
+
+A IA poderá produzir:
+
+
+Título comercial.
+Descrição detalhada.
+Resumo.
+Diferenciais.
+Texto para redes sociais.
+Texto para WhatsApp.
+Legendas.
+Descrição SEO.
+Permitir escolher o estilo:
+
+
+Luxuoso.
+Familiar.
+Moderno.
+Comercial.
+Objetivo.
+Persuasivo.
+Todos os textos deverão utilizar informações verificadas do imóvel.
+
+
+O corretor deverá aprovar antes da publicação.
+
+
+---
+
+
+PARTE 4 — PAINEL ADMINISTRATIVO COMPLETO
+
+
+4.1 — ACESSO ADMINISTRATIVO
+
+
+Criar uma área administrativa discreta no rodapé do site.
+
+
+Link:
+
+
+Painel Admin
+
+
+Criar tela de login profissional.
+
+
+Utilizar Firebase Authentication.
+
+
+Não armazenar senhas no frontend.
+
+
+Não deixar credenciais fixas no código.
+
+
+O primeiro administrador deverá ser criado por processo seguro de provisionamento.
+
+
+Não utilizar senhas padrão compartilhadas entre clientes.
+
+
+Implementar:
+
+
+Login.
+Logout.
+Recuperação de senha.
+Controle de sessão.
+Proteção de rotas.
+Controle de permissões.
+4.2 — DASHBOARD
+
+
+Criar um painel administrativo moderno.
+
+
+Apresentar:
+
+
+Total de visitantes.
+Visualizações.
+Imóveis publicados.
+Imóveis em destaque.
+Empreendimentos.
+Leads recebidos.
+Cliques no WhatsApp.
+Landing pages.
+Campanhas.
+Gráficos.
+Atividades recentes.
+Utilizar gráficos profissionais e indicadores reais.
+
+
+Não apresentar dados fictícios como métricas reais.
+
+
+4.3 — CADASTRO DE IMÓVEIS
+
+
+Criar formulário completo.
+
+
+Campos:
+
+
+Título.
+Código.
+Tipo.
+Negociação.
+Preço.
+Cidade.
+Bairro.
+Endereço, quando autorizado.
+Área construída.
+Área total.
+Quartos.
+Suítes.
+Banheiros.
+Vagas.
+Condomínio.
+IPTU.
+Descrição.
+Características.
+Diferenciais.
+Status.
+Destaque.
+Fotografias.
+Vídeos.
+Tour virtual.
+Informações adicionais.
+Permitir salvar como rascunho.
+
+
+4.4 — GERENCIAMENTO
+
+
+Permitir:
+
+
+Criar.
+Editar.
+Excluir.
+Duplicar.
+Publicar.
+Despublicar.
+Destacar.
+Retirar destaque.
+Ordenar.
+Alterar preço.
+Atualizar fotografias.
+Modificar status.
+4.5 — PUBLICAÇÃO AUTOMÁTICA
+
+
+Funcionalidade obrigatória.
+
+
+Quando o corretor salvar um imóvel como rascunho, ele deverá permanecer privado.
+
+
+Quando selecionar publicar, o imóvel deverá aparecer automaticamente no catálogo público.
+
+
+Utilizar Firebase Firestore como fonte de dados.
+
+
+Implementar atualização em tempo real quando apropriado.
+
+
+O site deverá consultar os imóveis publicados no banco de dados.
+
+
+Não depender de arquivos estáticos com imóveis escritos diretamente no código.
+
+
+Não exigir novo deploy da Vercel para atualizar:
+
+
+Imóveis.
+Preços.
+Fotografias.
+Descrições.
+Destaques.
+Empreendimentos.
+Landing pages.
+Configurações de conteúdo.
+A publicação deverá funcionar por operações no banco de dados.
+
+
+4.6 — GERENCIAMENTO DE LANDING PAGES
+
+
+Permitir criar páginas comerciais diretamente pelo painel.
+
+
+Oferecer modelos visuais editáveis.
+
+
+Permitir personalizar:
+
+
+Banner.
+Título.
+Fotografias.
+Vídeos.
+Descrição.
+Botões.
+Formulários.
+Informações.
+Cores.
+SEO.
+4.7 — GERENCIAMENTO DE LEADS
+
+
+Apresentar:
+
+
+Nome.
+Telefone.
+E-mail.
+Interesse.
+Imóvel.
+Data.
+Origem.
+Status.
+Observações.
+Permitir:
+
+
+Marcar como novo.
+Em atendimento.
+Agendado.
+Convertido.
+Perdido.
+Exportar.
+Pesquisar.
+Filtrar.
+4.8 — CONFIGURAÇÕES GERAIS
+
+
+Criar uma área de personalização completa.
+
+
+Permitir alterar todo o conteúdo institucional do site sem programação.
+
+
+Incluir:
+
+
+Logotipo.
+Banner.
+Nome.
+Cores.
+Fontes.
+Fotografias.
+Textos.
+WhatsApp.
+Telefone.
+E-mail.
+Redes sociais.
+CRECI.
+Rodapé.
+SEO.
+Domínio.
+Links.
+Configurações de apresentação.
+---
+
+
+PARTE 5 — FIREBASE, PUBLICAÇÃO AUTOMÁTICA E MÚLTIPLOS CORRETORES
+
+
+5.1 — ARQUITETURA FIREBASE
+
+
+Utilizar:
+
+
+Firebase Authentication.
+Cloud Firestore.
+Firebase Storage somente se houver necessidade específica.
+Firebase App Check quando aplicável.
+Cloud Functions ou endpoints seguros no backend.
+Firestore deverá armazenar os dados estruturados.
+
+
+Vercel Blob deverá armazenar os arquivos de mídia.
+
+
+5.2 — ESTRUTURA DE DADOS
+
+
+Organizar coleções:
+
+
+tenants.
+users.
+profiles.
+settings.
+properties.
+developments.
+landingPages.
+leads.
+testimonials.
+analytics.
+campaigns.
+media.
+aiJobs.
+auditLogs.
+Utilizar identificadores únicos.
+
+
+Cada documento relacionado a um corretor deverá possuir tenantId.
+
+
+5.3 — SISTEMA DE MÚLTIPLOS CORRETORES
+
+
+Implementar arquitetura preparada para múltiplos corretores.
+
+
+Cada corretor terá:
+
+
+Identificação própria.
+Login próprio.
+Perfil próprio.
+Site próprio.
+Configurações próprias.
+Imóveis próprios.
+Empreendimentos próprios.
+Leads próprios.
+Landing pages próprias.
+Fotografias próprias.
+Relatórios próprios.
+Um corretor não poderá visualizar, alterar ou excluir os dados de outro.
+
+
+O isolamento deverá ser aplicado no backend e nas regras de segurança.
+
+
+Não depender apenas de esconder informações na interface.
+
+
+
+5.5 — AUTENTICAÇÃO E PERMISSÕES
+
+
+Implementar papéis:
+
+
+Administrador.
+Corretor.
+Editor, se necessário.
+Aplicar permissões específicas.
+
+
+O administrador poderá administrar os dados autorizados do respectivo site.
+
+
+O corretor poderá administrar apenas seu próprio conteúdo.
+
+
+As operações privilegiadas deverão validar autenticação, tenantId e função no servidor.
+
+
+5.6 — ATUALIZAÇÃO EM TEMPO REAL
+
+
+Utilizar listeners do Firestore quando apropriado.
+
+
+Quando um imóvel for publicado:
+
+
+Atualizar o catálogo.
+Atualizar a página individual.
+Atualizar destaques.
+Atualizar buscas.
+Atualizar landing pages relacionadas.
+Quando um imóvel for despublicado, ele deverá deixar de aparecer nas listagens públicas.
+
+
+Garantir que conteúdos privados nunca sejam disponibilizados por consultas públicas.
+
+
+5.7 — REGRAS DE SEGURANÇA
+
+
+Criar regras Firestore completas.
+
+
+Não permitir que o usuário escolha livremente outro tenantId.
+
+
+Validar a associação do usuário com seu tenant no backend.
+
+
+Utilizar custom claims quando necessário.
+
+
+Não expor service account.
+
+
+Não confiar apenas em dados enviados pelo frontend.
+
+
+---
+
+
+PARTE 6 — VERCEL BLOB, LEADS, AUTOMAÇÕES E RELATÓRIOS
+
+
+6.1 — VERCEL BLOB
+
+
+Utilizar Vercel Blob para:
+
+
+Fotografias.
+Banners.
+Vídeos.
+Logotipos.
+Plantas.
+Documentos públicos.
+Materiais de empreendimentos.
+Arquivos de apresentação.
+Criar upload pelo painel.
+
+
+Permitir:
+
+
+Múltiplos arquivos.
+Pré-visualização.
+Exclusão.
+Substituição.
+Reordenação.
+Imagem principal.
+Organização por imóvel.
+Criar upload seguro por endpoints no servidor.
+
+
+Validar tipo, tamanho e autorização.
+
+
+Nunca expor tokens privados.
+
+
+6.2 — OTIMIZAÇÃO DE IMAGENS
+
+
+Implementar:
+
+
+Formatos modernos.
+Lazy loading.
+Imagens responsivas.
+Tamanhos adequados.
+Miniaturas.
+Pré-carregamento da imagem principal.
+Compressão.
+Carregamento progressivo.
+Não sacrificar a qualidade visual.
+
+
+6.3 — CAPTAÇÃO DE LEADS
+
+
+Criar formulários para:
+
+
+Comprar.
+Alugar.
+Vender.
+Investir.
+Agendar visita.
+Conhecer empreendimento.
+Solicitar informações.
+Armazenar os dados no Firestore.
+
+
+Incluir:
+
+
+Nome.
+Telefone.
+E-mail.
+Mensagem.
+Imóvel.
+Origem.
+Campanha.
+Data.
+Status.
+6.4 — WHATSAPP
+
+
+Criar integração contextualizada.
+
+
+O botão deverá abrir uma conversa com mensagem personalizada.
+
+
+Exemplo:
+
+
+"Olá! Tenho interesse no imóvel [NOME DO IMÓVEL], código [CÓDIGO]. Gostaria de receber mais informações."
+
+
+Utilizar o telefone comercial configurado.
+
+
+Não inventar números.
+
+
+6.5 — AUTOMAÇÕES
+
+
+Preparar:
+
+
+Notificações de novos leads.
+Notificações de novos agendamentos.
+Alertas administrativos.
+Registro de atividades.
+Processamento de tarefas de IA.
+Atualização de status.
+Integrações futuras.
+Utilizar serviços e credenciais reais quando disponíveis.
+
+
+6.6 — MÉTRICAS
+
+
+Registrar:
+
+
+Visualizações.
+Visitas.
+Imóveis consultados.
+Cliques.
+Compartilhamentos.
+Formulários.
+Leads.
+Origem.
+UTMs.
+Campanhas.
+Criar relatórios por período.
+
+
+Não identificar pessoas sem base legal ou consentimento.
+
+
+6.7 — GOOGLE ANALYTICS
+
+
+Preparar integrações com:
+
+
+Google Analytics 4.
+Google Tag Manager.
+Google Search Console.
+Google Ads.
+Criar configurações administrativas.
+
+
+Não afirmar que campanhas estão conectadas sem credenciais e validação.
+
+
+---
+
+
+PARTE 7 — WEB DESIGNER AI PRO, BIBLIOTECAS E ANIMAÇÕES AVANÇADAS
+
+
+7.1 — CENTRAL DE INTELIGÊNCIA VISUAL
+
+
+Antes de desenvolver elementos visuais do zero, consultar:
+
+
+React Bits:
+https://www.reactbits.dev/
+
+
+Magic UI:
+https://magicui.design/
+
+
+Aceternity UI:
+https://ui.aceternity.com/
+
+
+21st.dev:
+https://21st.dev/
+
+
+Motion:
+https://motion.dev/
+
+
+GSAP:
+https://gsap.com/
+
+
+Three.js:
+https://threejs.org/
+
+
+Lenis:
+https://lenis.darkroom.engineering/
+
+
+Consultar documentação oficial.
+
+
+Utilizar componentes reais e compatíveis.
+
+
+Não inventar componentes ou APIs.
+
+
+7.2 — MOTOR DE ANIMAÇÕES
+
+
+Implementar uma arquitetura organizada.
+
+
+Utilizar:
+
+
+GSAP.
+ScrollTrigger.
+Motion.
+CSS Animations.
+Lenis, quando compatível.
+Three.js em experiências específicas.
+Não instalar bibliotecas desnecessárias.
+
+
+Evitar duplicidade de mecanismos de animação.
+
+
+7.3 — EFEITOS CINEMATOGRÁFICOS
+
+
+Quero os seguintes recursos, quando adequados:
+
+
+Efeitos de rolagem:
+
+
+Scroll reveal.
+Parallax.
+Pinning.
+Animações sequenciais.
+Transições entre seções.
+Revelação de fotografias.
+Movimento de profundidade.
+Efeitos de imagem:
+
+
+Zoom cinematográfico.
+Máscaras.
+Transições.
+Movimento panorâmico.
+Camadas.
+Profundidade.
+Iluminação.
+Efeitos de tipografia:
+
+
+Text reveal.
+Typewriter.
+Split text.
+Animações de palavras.
+Títulos progressivos.
+Efeitos de interface:
+
+
+Hover avançado.
+Botões magnéticos.
+Cards interativos.
+Menus animados.
+Transições.
+Microinterações.
+Fundos:
+
+
+Gradientes animados.
+Partículas discretas.
+Iluminação.
+Texturas.
+Elementos 3D leves.
+7.4 — EXPERIÊNCIAS 3D
+
+
+Utilizar Three.js quando houver benefício real.
+
+
+Exemplos:
+
+
+Apresentação de empreendimentos.
+Visualizadores espaciais.
+Elementos arquitetônicos.
+Modelos 3D de imóveis.
+Experiências interativas.
+Evitar 3D desnecessário.
+
+
+Priorizar velocidade e compatibilidade.
+
+
+7.5 — EFEITOS POR SEÇÃO
+
+
+Não utilizar o mesmo efeito repetidamente.
+
+
+Cada seção deverá possuir identidade própria.
+
+
+Exemplo:
+
+
+Hero: entrada cinematográfica.
+Busca: aparição suave.
+Imóveis: cards com profundidade.
+Empreendimentos: composição editorial.
+Sobre: fotografia com parallax.
+Galeria: transições cinematográficas.
+Depoimentos: animação discreta.
+Contato: entrada progressiva.
+7.6 — ARQUIVO DE HABILIDADES
+
+
+Criar:
+
+
+WEB_DESIGNER_SKILLS.md
+
+
+Documentar:
+
+
+Bibliotecas.
+Componentes.
+Dependências.
+Exemplos.
+Efeitos.
+Compatibilidade.
+Instruções.
+Recomendações.
+Organizar por categorias.
+
+
+Esse documento deverá servir como catálogo permanente de recursos visuais do projeto.
+
+
+7.7 — RESPONSIVIDADE
+
+
+O site deverá funcionar em:
+
+
+Android.
+iPhone.
+Tablets.
+Notebooks.
+Desktops.
+Monitores grandes.
+Garantir:
+
+
+Navegação confortável.
+Animações adaptadas.
+Imagens responsivas.
+Menus adequados.
+Formulários acessíveis.
+Ausência de cortes.
+Desempenho.
+Respeitar prefers-reduced-motion.
+
+
+Não obrigar usuários de dispositivos modestos a carregar efeitos pesados.
+
+
+---
+
+
+PARTE 8 — SEGURANÇA, SEO, TESTES E PUBLICAÇÃO
+
+
+8.1 — SEGURANÇA
+
+
+Implementar:
+
+
+Firebase Authentication.
+Regras do Firestore.
+Validação no backend.
+Proteção de endpoints.
+Controle de permissões.
+Proteção de uploads.
+Rate limiting.
+Proteção contra spam.
+Logs.
+Variáveis de ambiente.
+Tratamento de erros.
+Auditoria de operações administrativas.
+Não colocar segredos no frontend.
+
+
+Não armazenar senhas em texto aberto.
+
+
+8.2 — LGPD
+
+
+Criar:
+
+
+Política de privacidade.
+Aviso de cookies, quando necessário.
+Consentimento para formulários.
+Controle de dados pessoais.
+Procedimentos de exclusão.
+Informações de tratamento.
+Proteção de dados de leads.
+8.3 — SEO
+
+
+Implementar:
+
+
+Meta titles.
+Meta descriptions.
+URLs amigáveis.
+Sitemap.
+Robots.txt.
+Canonical.
+Open Graph.
+Dados estruturados.
+Imagens otimizadas.
+SEO individual.
+Links internos.
+Preparar indexação das páginas públicas.
+
+
+Não indexar painel administrativo, dados privados ou rascunhos.
+
+
+8.4 — DESEMPENHO
+
+
+Otimizar:
+
+
+Carregamento inicial.
+Imagens.
+Fontes.
+JavaScript.
+CSS.
+Consultas Firestore.
+Cache.
+Renderização.
+Animações.
+Vídeos.
+Buscar excelentes resultados em Core Web Vitals.
+
+
+Não carregar vídeos pesados automaticamente em todas as páginas.
+
+
+8.5 — ESTRUTURA DO PROJETO
+
+
+Criar arquitetura organizada.
+
+
+Exemplo:
+
+
+src/
+
+
+components/
+pages/
+layouts/
+hooks/
+services/
+firebase/
+admin/
+public/
+animations/
+ai/
+properties/
+developments/
+landing-pages/
+analytics/
+styles/
+types/
+utils/
+Criar:
+
+
+package.json.
+tsconfig.
+Configurações Vercel.
+Configurações Firebase.
+README.md.
+WEB_DESIGNER_SKILLS.md.
+.env.example.
+Regras de segurança.
+Endpoints.
+Documentação.
+8.6 — VARIÁVEIS DE AMBIENTE
+
+
+Preparar as variáveis necessárias.
+
+
+Exemplos:
+
+
+FIREBASE_PROJECT_ID
+FIREBASE_CLIENT_EMAIL
+FIREBASE_PRIVATE_KEY
+BLOB_READ_WRITE_TOKEN
+GOOGLE_AI_API_KEY
+AI_VIDEO_PROVIDER
+NEXT_PUBLIC_FIREBASE_API_KEY
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+NEXT_PUBLIC_FIREBASE_PROJECT_ID
+
+
+Ajustar os nomes conforme a arquitetura e os SDKs utilizados.
+
+
+Variáveis privadas deverão existir somente no servidor.
+
+
+Não inserir valores fictícios como se fossem credenciais reais.
+
+
+8.7 — PUBLICAÇÃO NA VERCEL
+
+
+Preparar o projeto para deploy.
+
+
+Verificar:
+
+
+Build.
+Dependências.
+Rotas.
+Endpoints.
+Variáveis.
+Firebase.
+Blob.
+Domínio.
+HTTPS.
+Redirects.
+URLs públicas.
+O site deverá continuar funcionando depois do deploy.
+
+
+As atualizações de conteúdo deverão ocorrer pelo Firebase sem exigir nova publicação.
+
+
+Uma nova publicação será necessária somente para alterações de código, estrutura ou dependências.
+
+
+8.8 — DOCUMENTAÇÃO
+
+
+Criar README.md explicando:
+
+
+1. Instalação.
+2. Configuração do Firebase.
+3. Configuração do Authentication.
+4. Configuração do Firestore.
+5. Regras de segurança.
+6. Configuração do Vercel Blob.
+7. Configuração das APIs de IA.
+8. Criação do administrador.
+9. Execução local.
+10. Build.
+11. Deploy.
+12. Configuração de domínio.
+13. Testes.
+14. Manutenção.
+
+
+8.9 — TESTES OBRIGATÓRIOS
+
+
+Testar:
+
+
+Login.
+Logout.
+Recuperação de senha.
+Permissões.
+Cadastro.
+Edição.
+Exclusão.
+Publicação.
+Despublicação.
+Upload.
+Galeria.
+Busca.
+Filtros.
+Landing pages.
+Leads.
+WhatsApp.
+Analytics.
+Animações.
+Responsividade.
+SEO.
+Segurança.
+Build.
+Testar também o isolamento entre corretores.
+
+
+Um corretor não poderá acessar os imóveis de outro mesmo que tente modificar URLs ou requisições.
+
+
+Não declarar integração concluída sem testes reais.
+
+
+8.10 — ENTREGA FINAL
+
+
+Entregar:
+
+
+Site público completo.
+Painel administrativo.
+Firebase funcional.
+Vercel Blob funcional.
+Cadastro de imóveis.
+Publicação automática.
+Landing pages.
+Gestão de leads.
+Relatórios.
+Animações avançadas.
+Recursos de IA preparados.
+Experiências de visita virtual.
+Estrutura multi-corretor.
+SEO.
+Documentação.
+Projeto pronto para Vercel.
+---
+
+
+ORDEM DE EXECUÇÃO DO PROJETO
+
+
+Executar na seguinte sequência:
+
+
+FASE 1 — Analisar o projeto e investigar as informações públicas do corretor.
+
+
+FASE 2 — Definir arquitetura, identidade e estrutura de dados.
+
+
+FASE 3 — Desenvolver o site público.
+
+
+FASE 4 — Criar catálogo, páginas individuais e empreendimentos.
+
+
+FASE 5 — Criar painel administrativo.
+
+
+FASE 6 — Integrar Firebase Authentication e Firestore.
+
+
+FASE 7 — Integrar Vercel Blob.
+
+
+FASE 8 — Implementar publicação automática.
+
+
+FASE 9 — Implementar isolamento entre corretores.
+
+
+FASE 10 — Implementar inteligência artificial para fotografias e vídeos.
+
+
+FASE 11 — Criar experiência de visita virtual.
+
+
+FASE 12 — Aplicar bibliotecas e efeitos visuais.
+
+
+FASE 13 — Implementar SEO, métricas e segurança.
+
+
+FASE 14 — Testar o projeto.
+
+
+FASE 15 — Preparar deploy.
+
+
+Não interromper o desenvolvimento depois da criação da página inicial.
+
+
+Não entregar somente protótipos.
+
+
+Não utilizar dados fictícios para simular integrações.
+
+
+Se alguma integração depender de credenciais externas, preparar o código, informar o que falta e não afirmar que está funcionando antes de testar.
+
+
+REGRA ABSOLUTA DE QUALIDADE
+
+
+Quero um resultado de nível profissional.
+
+
+Não simplifique funcionalidades importantes.
+
+
+Não remova recursos existentes para facilitar o desenvolvimento.
+
+
+Não substitua funcionalidades reais por botões decorativos.
+
+
+Não deixe páginas incompletas.
+
+
+Não utilize textos genéricos de IA.
+
+
+Não invente informações sobre imóveis.
+
+
+Não comprometa o desempenho com animações desnecessárias.
+
+
+Não exponha dados privados.
+
+
+Não misture os dados de diferentes corretores.
+
+
+Não exija alterações no código para operações normais de cadastro e gerenciamento de conteúdo.
+
+
+PRIORIDADE MÁXIMA: O CORRETOR DEVERÁ CONSEGUIR ADMINISTRAR O SITE COMPLETAMENTE DE FORMA INDEPENDENTE, DIRETAMENTE PELA INTERNET.
+
+
+O resultado deverá ser um site imobiliário premium, cinematográfico, inteligente, moderno, automatizado e preparado para crescer.

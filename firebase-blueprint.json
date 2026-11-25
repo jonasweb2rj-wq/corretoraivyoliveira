@@ -1,0 +1,390 @@
+{
+  "entities": {
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Registered platform administrator allowed full oversight.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "maxLength": 200 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated user account linked to a specific real estate tenant and RBAC role.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "maxLength": 200 },
+        "displayName": { "type": "string", "maxLength": 120 },
+        "photoURL": { "type": "string", "maxLength": 1000 },
+        "role": { "type": "string", "enum": ["admin", "broker", "editor"] },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "displayName", "role", "tenantId", "createdAt", "updatedAt"]
+    },
+    "Tenant": {
+      "title": "Tenant",
+      "description": "Broker/agency site configuration, visual theme, institutional profile, SEO and analytics settings.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "slug": { "type": "string", "maxLength": 128, "pattern": "^[a-z0-9\\-]+$" },
+        "brandName": { "type": "string", "maxLength": 120 },
+        "brokerName": { "type": "string", "maxLength": 120 },
+        "creci": { "type": "string", "maxLength": 60 },
+        "city": { "type": "string", "maxLength": 80 },
+        "state": { "type": "string", "maxLength": 20 },
+        "regions": { "type": "array" },
+        "whatsapp": { "type": "string", "maxLength": 30 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 200 },
+        "instagramHandle": { "type": "string", "maxLength": 80 },
+        "instagramUrl": { "type": "string", "maxLength": 500 },
+        "logoUrl": { "type": "string", "maxLength": 1000 },
+        "faviconUrl": { "type": "string", "maxLength": 1000 },
+        "heroTitle": { "type": "string", "maxLength": 200 },
+        "heroSubtitle": { "type": "string", "maxLength": 500 },
+        "heroCtaText": { "type": "string", "maxLength": 60 },
+        "heroImages": { "type": "array" },
+        "aboutHeadline": { "type": "string", "maxLength": 200 },
+        "aboutBio": { "type": "string", "maxLength": 4000 },
+        "aboutPhotoUrl": { "type": "string", "maxLength": 1000 },
+        "aboutExperienceYears": { "type": "string", "maxLength": 40 },
+        "specialties": { "type": "array" },
+        "differentials": { "type": "array" },
+        "themePreset": { "type": "string", "enum": ["luxo-contemporaneo", "minimalista-premium", "imobiliario-moderno", "elegancia-classica", "arquitetura-editorial"] },
+        "themeConfig": { "type": "object" },
+        "seoTitle": { "type": "string", "maxLength": 160 },
+        "seoDescription": { "type": "string", "maxLength": 320 },
+        "ga4Id": { "type": "string", "maxLength": 60 },
+        "gtmId": { "type": "string", "maxLength": 60 },
+        "gscVerification": { "type": "string", "maxLength": 120 },
+        "googleAdsId": { "type": "string", "maxLength": 60 },
+        "lgpdPrivacyText": { "type": "string", "maxLength": 6000 },
+        "customDomain": { "type": "string", "maxLength": 200 },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "ownerUid", "slug", "brandName", "brokerName", "city", "themePreset", "status", "createdAt", "updatedAt"]
+    },
+    "Property": {
+      "title": "Property",
+      "description": "Real estate listing belonging to a tenant, supporting draft/published workflow and virtual tour media.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "slug": { "type": "string", "maxLength": 160, "pattern": "^[a-z0-9\\-]+$" },
+        "code": { "type": "string", "maxLength": 40 },
+        "title": { "type": "string", "maxLength": 180 },
+        "propertyType": { "type": "string", "enum": ["casa", "apartamento", "cobertura", "terreno", "comercial"] },
+        "transactionType": { "type": "string", "enum": ["venda", "aluguel", "lancamento"] },
+        "price": { "type": "number" },
+        "condoFee": { "type": "number" },
+        "iptu": { "type": "number" },
+        "city": { "type": "string", "maxLength": 80 },
+        "neighborhood": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 240 },
+        "showExactAddress": { "type": "boolean" },
+        "builtArea": { "type": "number" },
+        "totalArea": { "type": "number" },
+        "bedrooms": { "type": "number" },
+        "suites": { "type": "number" },
+        "bathrooms": { "type": "number" },
+        "parkingSpaces": { "type": "number" },
+        "description": { "type": "string", "maxLength": 8000 },
+        "summary": { "type": "string", "maxLength": 600 },
+        "features": { "type": "array" },
+        "differentials": { "type": "array" },
+        "coverImage": { "type": "string", "maxLength": 1000 },
+        "images": { "type": "array" },
+        "videos": { "type": "array" },
+        "panorama360Images": { "type": "array" },
+        "virtualTourType": { "type": "string", "enum": ["photo", "panorama360", "3d"] },
+        "status": { "type": "string", "enum": ["draft", "published", "sold", "rented"] },
+        "featured": { "type": "boolean" },
+        "sortOrder": { "type": "number" },
+        "seoTitle": { "type": "string", "maxLength": 160 },
+        "seoDescription": { "type": "string", "maxLength": 320 },
+        "socialCopy": { "type": "string", "maxLength": 2000 },
+        "whatsappCopy": { "type": "string", "maxLength": 1000 },
+        "viewsCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "slug", "code", "title", "propertyType", "transactionType", "price", "city", "neighborhood", "status", "featured", "createdAt", "updatedAt"]
+    },
+    "Development": {
+      "title": "Development",
+      "description": "Real estate development or launch project belonging to a tenant.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "slug": { "type": "string", "maxLength": 160, "pattern": "^[a-z0-9\\-]+$" },
+        "name": { "type": "string", "maxLength": 160 },
+        "developer": { "type": "string", "maxLength": 120 },
+        "category": { "type": "string", "enum": ["lancamento", "condominio", "residencial", "comercial"] },
+        "city": { "type": "string", "maxLength": 80 },
+        "neighborhood": { "type": "string", "maxLength": 100 },
+        "deliveryDate": { "type": "string", "maxLength": 60 },
+        "priceFrom": { "type": "number" },
+        "description": { "type": "string", "maxLength": 8000 },
+        "technicalSpecs": { "type": "array" },
+        "coverImage": { "type": "string", "maxLength": 1000 },
+        "images": { "type": "array" },
+        "floorPlans": { "type": "array" },
+        "videos": { "type": "array" },
+        "status": { "type": "string", "enum": ["draft", "published"] },
+        "featured": { "type": "boolean" },
+        "seoTitle": { "type": "string", "maxLength": 160 },
+        "seoDescription": { "type": "string", "maxLength": 320 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "slug", "name", "category", "city", "neighborhood", "status", "featured", "createdAt", "updatedAt"]
+    },
+    "LandingPage": {
+      "title": "LandingPage",
+      "description": "Commercial landing page generated from a property or custom campaign.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "propertyId": { "type": "string", "maxLength": 128 },
+        "slug": { "type": "string", "maxLength": 160, "pattern": "^[a-z0-9\\-]+$" },
+        "template": { "type": "string", "enum": ["editorial-luxo", "lancamento-impacto", "minimalista-direto"] },
+        "title": { "type": "string", "maxLength": 180 },
+        "subtitle": { "type": "string", "maxLength": 400 },
+        "heroImage": { "type": "string", "maxLength": 1000 },
+        "description": { "type": "string", "maxLength": 6000 },
+        "ctaText": { "type": "string", "maxLength": 80 },
+        "accentColor": { "type": "string", "maxLength": 30 },
+        "highlights": { "type": "array" },
+        "status": { "type": "string", "enum": ["draft", "published"] },
+        "viewsCount": { "type": "number" },
+        "leadsCount": { "type": "number" },
+        "seoTitle": { "type": "string", "maxLength": 160 },
+        "seoDescription": { "type": "string", "maxLength": 320 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "slug", "template", "title", "status", "createdAt", "updatedAt"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "Captured prospective client inquiry with LGPD consent, scoped strictly to tenant owner.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "maxLength": 120 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "email": { "type": "string", "maxLength": 200 },
+        "interest": { "type": "string", "enum": ["comprar", "alugar", "vender", "investir", "visita", "empreendimento", "informacoes"] },
+        "propertyId": { "type": "string", "maxLength": 128 },
+        "propertyTitle": { "type": "string", "maxLength": 200 },
+        "developmentId": { "type": "string", "maxLength": 128 },
+        "landingPageId": { "type": "string", "maxLength": 128 },
+        "source": { "type": "string", "maxLength": 100 },
+        "utmSource": { "type": "string", "maxLength": 100 },
+        "utmMedium": { "type": "string", "maxLength": 100 },
+        "utmCampaign": { "type": "string", "maxLength": 100 },
+        "message": { "type": "string", "maxLength": 2000 },
+        "lgpdConsent": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["new", "in_progress", "scheduled", "converted", "lost"] },
+        "notes": { "type": "string", "maxLength": 2000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "name", "phone", "interest", "lgpdConsent", "status", "createdAt", "updatedAt"]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "Verified client testimonial approved by the broker.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "clientName": { "type": "string", "maxLength": 120 },
+        "clientRole": { "type": "string", "maxLength": 120 },
+        "quote": { "type": "string", "maxLength": 1200 },
+        "propertyReference": { "type": "string", "maxLength": 160 },
+        "status": { "type": "string", "enum": ["draft", "published"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "clientName", "quote", "status", "createdAt", "updatedAt"]
+    },
+    "AnalyticsEvent": {
+      "title": "AnalyticsEvent",
+      "description": "Anonymized interaction telemetry event for broker reporting.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "eventType": { "type": "string", "enum": ["page_view", "property_view", "whatsapp_click", "share", "lead_submit", "virtual_tour_open"] },
+        "targetId": { "type": "string", "maxLength": 128 },
+        "path": { "type": "string", "maxLength": 300 },
+        "source": { "type": "string", "maxLength": 120 },
+        "utmSource": { "type": "string", "maxLength": 100 },
+        "utmCampaign": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "eventType", "path", "createdAt"]
+    },
+    "Campaign": {
+      "title": "Campaign",
+      "description": "Marketing campaign metadata for UTM tracking.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "maxLength": 160 },
+        "channel": { "type": "string", "maxLength": 80 },
+        "utmSource": { "type": "string", "maxLength": 100 },
+        "utmMedium": { "type": "string", "maxLength": 100 },
+        "utmCampaign": { "type": "string", "maxLength": 100 },
+        "status": { "type": "string", "enum": ["active", "paused", "ended"] },
+        "budget": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "name", "status", "createdAt", "updatedAt"]
+    },
+    "MediaAsset": {
+      "title": "MediaAsset",
+      "description": "Media reference stored in Vercel Blob or preview storage.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "propertyId": { "type": "string", "maxLength": 128 },
+        "url": { "type": "string", "maxLength": 1000 },
+        "pathname": { "type": "string", "maxLength": 400 },
+        "name": { "type": "string", "maxLength": 200 },
+        "mimeType": { "type": "string", "maxLength": 100 },
+        "size": { "type": "number" },
+        "category": { "type": "string", "enum": ["photo", "panorama360", "floorplan", "video", "logo", "banner", "document"] },
+        "roomTag": { "type": "string", "maxLength": 80 },
+        "isPrimary": { "type": "boolean" },
+        "isAiEnhanced": { "type": "boolean" },
+        "originalUrl": { "type": "string", "maxLength": 1000 },
+        "isPublic": { "type": "boolean" },
+        "sortOrder": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "url", "name", "mimeType", "category", "isPublic", "createdAt"]
+    },
+    "AiJob": {
+      "title": "AiJob",
+      "description": "Tracked AI processing job for photo analysis, copywriting, and video generation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "propertyId": { "type": "string", "maxLength": 128 },
+        "jobType": { "type": "string", "enum": ["photo_analysis", "description_gen", "video_cinematic", "video_veo"] },
+        "provider": { "type": "string", "maxLength": 60 },
+        "style": { "type": "string", "maxLength": 80 },
+        "durationSec": { "type": "number" },
+        "aspectRatio": { "type": "string", "enum": ["16:9", "9:16"] },
+        "status": { "type": "string", "enum": ["queued", "processing", "completed", "failed", "cancelled"] },
+        "inputImageUrls": { "type": "array" },
+        "outputUrl": { "type": "string", "maxLength": 1000 },
+        "errorMessage": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "jobType", "status", "createdAt", "updatedAt"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable administrative action log per tenant.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "tenantId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "actorUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "actorEmail": { "type": "string", "maxLength": 200 },
+        "action": { "type": "string", "maxLength": 80 },
+        "entityType": { "type": "string", "maxLength": 60 },
+        "entityId": { "type": "string", "maxLength": 128 },
+        "summary": { "type": "string", "maxLength": 400 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "tenantId", "ownerUid", "actorUid", "action", "entityType", "summary", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/admins/{uid}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Admin role directory"
+    },
+    "/users/{uid}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles with role and tenant assignment"
+    },
+    "/tenants/{tenantId}": {
+      "schema": { "$ref": "#/entities/Tenant" },
+      "description": "Multi-tenant broker site configuration and theme"
+    },
+    "/properties/{propertyId}": {
+      "schema": { "$ref": "#/entities/Property" },
+      "description": "Real estate listings scoped by tenantId and status"
+    },
+    "/developments/{developmentId}": {
+      "schema": { "$ref": "#/entities/Development" },
+      "description": "Real estate developments scoped by tenantId and status"
+    },
+    "/landingPages/{landingPageId}": {
+      "schema": { "$ref": "#/entities/LandingPage" },
+      "description": "Commercial landing pages scoped by tenantId and status"
+    },
+    "/leads/{leadId}": {
+      "schema": { "$ref": "#/entities/Lead" },
+      "description": "Private client leads scoped to tenant owner"
+    },
+    "/testimonials/{testimonialId}": {
+      "schema": { "$ref": "#/entities/Testimonial" },
+      "description": "Verified testimonials scoped by tenantId and status"
+    },
+    "/analyticsEvents/{eventId}": {
+      "schema": { "$ref": "#/entities/AnalyticsEvent" },
+      "description": "Anonymized interaction metrics scoped to tenant owner"
+    },
+    "/campaigns/{campaignId}": {
+      "schema": { "$ref": "#/entities/Campaign" },
+      "description": "Marketing campaigns scoped to tenant owner"
+    },
+    "/media/{mediaId}": {
+      "schema": { "$ref": "#/entities/MediaAsset" },
+      "description": "Media assets metadata scoped to tenant owner"
+    },
+    "/aiJobs/{jobId}": {
+      "schema": { "$ref": "#/entities/AiJob" },
+      "description": "AI job queue and history scoped to tenant owner"
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Immutable audit trail scoped to tenant owner"
+    }
+  }
+}

@@ -1,0 +1,657 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Startup connection check document
+    match /test/connection {
+      allow get: if true;
+    }
+
+    // Global helper primitives
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    function isValidSlug(slug) {
+      return slug is string && slug.size() >= 1 && slug.size() <= 160 && slug.matches('^[a-z0-9\\-]+$');
+    }
+    function incoming() {
+      return request.resource.data;
+    }
+    function existing() {
+      return resource.data;
+    }
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isPrimaryAdminUid() {
+      return isSignedIn() &&
+        request.auth.uid == '6zWtrk2KMVaBY2kW9aGe4FjbPu13' &&
+        request.auth.token.email == 'sandrodbillo@hotmail.com';
+    }
+    function isVerified() {
+      return isPrimaryAdminUid() || (isSignedIn() && request.auth.token.email_verified == true);
+    }
+    function isBootstrappedAdmin() {
+      return isPrimaryAdminUid() || (isVerified() && request.auth.token.email == 'jonasweb2rj@gmail.com');
+    }
+    function isAdmin() {
+      return isBootstrappedAdmin() || (
+        isVerified() && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+    function isOwner(uid) {
+      return isVerified() && request.auth.uid == uid;
+    }
+    function isTenantOwner(tenantId) {
+      return isVerified() &&
+        exists(/databases/$(database)/documents/tenants/$(tenantId)) &&
+        get(/databases/$(database)/documents/tenants/$(tenantId)).data.ownerUid == request.auth.uid;
+    }
+    function isStr(val, maxLen) {
+      return val is string && val.size() <= maxLen;
+    }
+    function isReqStr(val, maxLen) {
+      return val is string && val.size() >= 1 && val.size() <= maxLen;
+    }
+    function isStrList(val, maxItems) {
+      return val is list && val.size() <= maxItems && (val.size() == 0 || val[0] is string);
+    }
+    function isMapList(val, maxItems) {
+      return val is list && val.size() <= maxItems && (val.size() == 0 || val[0] is map);
+    }
+
+    // Validation Blueprints
+    function isValidAdmin(data) {
+      return data.keys().hasAll(['uid', 'email', 'createdAt']) &&
+        data.keys().hasOnly(['uid', 'email', 'createdAt']) &&
+        isValidId(data.uid) &&
+        isReqStr(data.email, 200) &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['uid', 'email', 'displayName', 'role', 'tenantId', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['uid', 'email', 'displayName', 'photoURL', 'role', 'tenantId', 'createdAt', 'updatedAt']) &&
+        isValidId(data.uid) &&
+        isReqStr(data.email, 200) &&
+        isReqStr(data.displayName, 120) &&
+        (!('photoURL' in data) || isStr(data.photoURL, 1000)) &&
+        data.role in ['admin', 'broker', 'editor'] &&
+        isValidId(data.tenantId) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidTenant(data) {
+      return data.keys().hasAll(['id', 'ownerUid', 'slug', 'brandName', 'brokerName', 'city', 'themePreset', 'status', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly([
+          'id', 'ownerUid', 'slug', 'brandName', 'brokerName', 'creci', 'city', 'state', 'regions',
+          'whatsapp', 'phone', 'email', 'instagramHandle', 'instagramUrl', 'logoUrl', 'faviconUrl',
+          'heroTitle', 'heroSubtitle', 'heroCtaText', 'heroImages', 'aboutHeadline', 'aboutBio',
+          'aboutPhotoUrl', 'aboutExperienceYears', 'specialties', 'differentials', 'themePreset',
+          'themeConfig', 'seoTitle', 'seoDescription', 'ga4Id', 'gtmId', 'gscVerification',
+          'googleAdsId', 'lgpdPrivacyText', 'customDomain', 'status', 'createdAt', 'updatedAt'
+        ]) &&
+        isValidId(data.id) &&
+        isValidId(data.ownerUid) &&
+        isValidSlug(data.slug) &&
+        isReqStr(data.brandName, 120) &&
+        isReqStr(data.brokerName, 120) &&
+        (!('creci' in data) || isStr(data.creci, 60)) &&
+        isReqStr(data.city, 80) &&
+        (!('state' in data) || isStr(data.state, 20)) &&
+        (!('regions' in data) || isStrList(data.regions, 30)) &&
+        (!('whatsapp' in data) || isStr(data.whatsapp, 30)) &&
+        (!('phone' in data) || isStr(data.phone, 30)) &&
+        (!('email' in data) || isStr(data.email, 200)) &&
+        (!('instagramHandle' in data) || isStr(data.instagramHandle, 80)) &&
+        (!('instagramUrl' in data) || isStr(data.instagramUrl, 500)) &&
+        (!('logoUrl' in data) || isStr(data.logoUrl, 1000)) &&
+        (!('faviconUrl' in data) || isStr(data.faviconUrl, 1000)) &&
+        (!('heroTitle' in data) || isStr(data.heroTitle, 200)) &&
+        (!('heroSubtitle' in data) || isStr(data.heroSubtitle, 500)) &&
+        (!('heroCtaText' in data) || isStr(data.heroCtaText, 60)) &&
+        (!('heroImages' in data) || isStrList(data.heroImages, 10)) &&
+        (!('aboutHeadline' in data) || isStr(data.aboutHeadline, 200)) &&
+        (!('aboutBio' in data) || isStr(data.aboutBio, 4000)) &&
+        (!('aboutPhotoUrl' in data) || isStr(data.aboutPhotoUrl, 1000)) &&
+        (!('aboutExperienceYears' in data) || isStr(data.aboutExperienceYears, 40)) &&
+        (!('specialties' in data) || isStrList(data.specialties, 20)) &&
+        (!('differentials' in data) || isMapList(data.differentials, 12)) &&
+        data.themePreset in ['luxo-contemporaneo', 'minimalista-premium', 'imobiliario-moderno', 'elegancia-classica', 'arquitetura-editorial'] &&
+        (!('themeConfig' in data) || data.themeConfig is map) &&
+        (!('seoTitle' in data) || isStr(data.seoTitle, 160)) &&
+        (!('seoDescription' in data) || isStr(data.seoDescription, 320)) &&
+        (!('ga4Id' in data) || isStr(data.ga4Id, 60)) &&
+        (!('gtmId' in data) || isStr(data.gtmId, 60)) &&
+        (!('gscVerification' in data) || isStr(data.gscVerification, 120)) &&
+        (!('googleAdsId' in data) || isStr(data.googleAdsId, 60)) &&
+        (!('lgpdPrivacyText' in data) || isStr(data.lgpdPrivacyText, 6000)) &&
+        (!('customDomain' in data) || isStr(data.customDomain, 200)) &&
+        data.status in ['active', 'inactive'] &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidProperty(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'slug', 'code', 'title', 'propertyType', 'transactionType', 'price', 'city', 'neighborhood', 'status', 'featured', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly([
+          'id', 'tenantId', 'ownerUid', 'slug', 'code', 'title', 'propertyType', 'transactionType',
+          'price', 'condoFee', 'iptu', 'city', 'neighborhood', 'address', 'showExactAddress',
+          'builtArea', 'totalArea', 'bedrooms', 'suites', 'bathrooms', 'parkingSpaces',
+          'description', 'summary', 'features', 'differentials', 'coverImage', 'images',
+          'videos', 'panorama360Images', 'virtualTourType', 'status', 'featured', 'sortOrder',
+          'seoTitle', 'seoDescription', 'socialCopy', 'whatsappCopy', 'viewsCount', 'createdAt', 'updatedAt'
+        ]) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        isValidSlug(data.slug) &&
+        isReqStr(data.code, 40) &&
+        isReqStr(data.title, 180) &&
+        data.propertyType in ['casa', 'apartamento', 'cobertura', 'terreno', 'comercial'] &&
+        data.transactionType in ['venda', 'aluguel', 'lancamento'] &&
+        data.price is number && data.price >= 0 &&
+        (!('condoFee' in data) || (data.condoFee is number && data.condoFee >= 0)) &&
+        (!('iptu' in data) || (data.iptu is number && data.iptu >= 0)) &&
+        isReqStr(data.city, 80) &&
+        isReqStr(data.neighborhood, 100) &&
+        (!('address' in data) || isStr(data.address, 240)) &&
+        (!('showExactAddress' in data) || data.showExactAddress is bool) &&
+        (!('builtArea' in data) || (data.builtArea is number && data.builtArea >= 0)) &&
+        (!('totalArea' in data) || (data.totalArea is number && data.totalArea >= 0)) &&
+        (!('bedrooms' in data) || (data.bedrooms is number && data.bedrooms >= 0)) &&
+        (!('suites' in data) || (data.suites is number && data.suites >= 0)) &&
+        (!('bathrooms' in data) || (data.bathrooms is number && data.bathrooms >= 0)) &&
+        (!('parkingSpaces' in data) || (data.parkingSpaces is number && data.parkingSpaces >= 0)) &&
+        (!('description' in data) || isStr(data.description, 8000)) &&
+        (!('summary' in data) || isStr(data.summary, 600)) &&
+        (!('features' in data) || isStrList(data.features, 40)) &&
+        (!('differentials' in data) || isStrList(data.differentials, 25)) &&
+        (!('coverImage' in data) || isStr(data.coverImage, 1000)) &&
+        (!('images' in data) || isMapList(data.images, 50)) &&
+        (!('videos' in data) || isMapList(data.videos, 12)) &&
+        (!('panorama360Images' in data) || isMapList(data.panorama360Images, 20)) &&
+        (!('virtualTourType' in data) || data.virtualTourType in ['photo', 'panorama360', '3d']) &&
+        data.status in ['draft', 'published', 'sold', 'rented'] &&
+        data.featured is bool &&
+        (!('sortOrder' in data) || data.sortOrder is number) &&
+        (!('seoTitle' in data) || isStr(data.seoTitle, 160)) &&
+        (!('seoDescription' in data) || isStr(data.seoDescription, 320)) &&
+        (!('socialCopy' in data) || isStr(data.socialCopy, 2000)) &&
+        (!('whatsappCopy' in data) || isStr(data.whatsappCopy, 1000)) &&
+        (!('viewsCount' in data) || (data.viewsCount is number && data.viewsCount >= 0)) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidDevelopment(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'slug', 'name', 'category', 'city', 'neighborhood', 'status', 'featured', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly([
+          'id', 'tenantId', 'ownerUid', 'slug', 'name', 'developer', 'category', 'city',
+          'neighborhood', 'deliveryDate', 'priceFrom', 'description', 'technicalSpecs',
+          'coverImage', 'images', 'floorPlans', 'videos', 'status', 'featured',
+          'seoTitle', 'seoDescription', 'createdAt', 'updatedAt'
+        ]) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        isValidSlug(data.slug) &&
+        isReqStr(data.name, 160) &&
+        (!('developer' in data) || isStr(data.developer, 120)) &&
+        data.category in ['lancamento', 'condominio', 'residencial', 'comercial'] &&
+        isReqStr(data.city, 80) &&
+        isReqStr(data.neighborhood, 100) &&
+        (!('deliveryDate' in data) || isStr(data.deliveryDate, 60)) &&
+        (!('priceFrom' in data) || (data.priceFrom is number && data.priceFrom >= 0)) &&
+        (!('description' in data) || isStr(data.description, 8000)) &&
+        (!('technicalSpecs' in data) || isStrList(data.technicalSpecs, 30)) &&
+        (!('coverImage' in data) || isStr(data.coverImage, 1000)) &&
+        (!('images' in data) || isMapList(data.images, 40)) &&
+        (!('floorPlans' in data) || isMapList(data.floorPlans, 20)) &&
+        (!('videos' in data) || isMapList(data.videos, 10)) &&
+        data.status in ['draft', 'published'] &&
+        data.featured is bool &&
+        (!('seoTitle' in data) || isStr(data.seoTitle, 160)) &&
+        (!('seoDescription' in data) || isStr(data.seoDescription, 320)) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidLandingPage(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'slug', 'template', 'title', 'status', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly([
+          'id', 'tenantId', 'ownerUid', 'propertyId', 'slug', 'template', 'title', 'subtitle',
+          'heroImage', 'description', 'ctaText', 'accentColor', 'highlights', 'status',
+          'viewsCount', 'leadsCount', 'seoTitle', 'seoDescription', 'createdAt', 'updatedAt'
+        ]) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        (!('propertyId' in data) || isStr(data.propertyId, 128)) &&
+        isValidSlug(data.slug) &&
+        data.template in ['editorial-luxo', 'lancamento-impacto', 'minimalista-direto'] &&
+        isReqStr(data.title, 180) &&
+        (!('subtitle' in data) || isStr(data.subtitle, 400)) &&
+        (!('heroImage' in data) || isStr(data.heroImage, 1000)) &&
+        (!('description' in data) || isStr(data.description, 6000)) &&
+        (!('ctaText' in data) || isStr(data.ctaText, 80)) &&
+        (!('accentColor' in data) || isStr(data.accentColor, 30)) &&
+        (!('highlights' in data) || isStrList(data.highlights, 15)) &&
+        data.status in ['draft', 'published'] &&
+        (!('viewsCount' in data) || (data.viewsCount is number && data.viewsCount >= 0)) &&
+        (!('leadsCount' in data) || (data.leadsCount is number && data.leadsCount >= 0)) &&
+        (!('seoTitle' in data) || isStr(data.seoTitle, 160)) &&
+        (!('seoDescription' in data) || isStr(data.seoDescription, 320)) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidLead(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'name', 'phone', 'interest', 'lgpdConsent', 'status', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly([
+          'id', 'tenantId', 'ownerUid', 'name', 'phone', 'email', 'interest', 'propertyId',
+          'propertyTitle', 'developmentId', 'landingPageId', 'source', 'utmSource', 'utmMedium',
+          'utmCampaign', 'message', 'lgpdConsent', 'status', 'notes', 'createdAt', 'updatedAt'
+        ]) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        isReqStr(data.name, 120) &&
+        isReqStr(data.phone, 40) &&
+        (!('email' in data) || isStr(data.email, 200)) &&
+        data.interest in ['comprar', 'alugar', 'vender', 'investir', 'visita', 'empreendimento', 'informacoes'] &&
+        (!('propertyId' in data) || isStr(data.propertyId, 128)) &&
+        (!('propertyTitle' in data) || isStr(data.propertyTitle, 200)) &&
+        (!('developmentId' in data) || isStr(data.developmentId, 128)) &&
+        (!('landingPageId' in data) || isStr(data.landingPageId, 128)) &&
+        (!('source' in data) || isStr(data.source, 100)) &&
+        (!('utmSource' in data) || isStr(data.utmSource, 100)) &&
+        (!('utmMedium' in data) || isStr(data.utmMedium, 100)) &&
+        (!('utmCampaign' in data) || isStr(data.utmCampaign, 100)) &&
+        (!('message' in data) || isStr(data.message, 2000)) &&
+        data.lgpdConsent is bool &&
+        data.status in ['new', 'in_progress', 'scheduled', 'converted', 'lost'] &&
+        (!('notes' in data) || isStr(data.notes, 2000)) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidTestimonial(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'clientName', 'quote', 'status', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['id', 'tenantId', 'ownerUid', 'clientName', 'clientRole', 'quote', 'propertyReference', 'status', 'createdAt', 'updatedAt']) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        isReqStr(data.clientName, 120) &&
+        (!('clientRole' in data) || isStr(data.clientRole, 120)) &&
+        isReqStr(data.quote, 1200) &&
+        (!('propertyReference' in data) || isStr(data.propertyReference, 160)) &&
+        data.status in ['draft', 'published'] &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidAnalyticsEvent(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'eventType', 'path', 'createdAt']) &&
+        data.keys().hasOnly(['id', 'tenantId', 'ownerUid', 'eventType', 'targetId', 'path', 'source', 'utmSource', 'utmCampaign', 'createdAt']) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        data.eventType in ['page_view', 'property_view', 'whatsapp_click', 'share', 'lead_submit', 'virtual_tour_open'] &&
+        (!('targetId' in data) || isStr(data.targetId, 128)) &&
+        isReqStr(data.path, 300) &&
+        (!('source' in data) || isStr(data.source, 120)) &&
+        (!('utmSource' in data) || isStr(data.utmSource, 100)) &&
+        (!('utmCampaign' in data) || isStr(data.utmCampaign, 100)) &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidCampaign(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'name', 'status', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['id', 'tenantId', 'ownerUid', 'name', 'channel', 'utmSource', 'utmMedium', 'utmCampaign', 'status', 'budget', 'createdAt', 'updatedAt']) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        isReqStr(data.name, 160) &&
+        (!('channel' in data) || isStr(data.channel, 80)) &&
+        (!('utmSource' in data) || isStr(data.utmSource, 100)) &&
+        (!('utmMedium' in data) || isStr(data.utmMedium, 100)) &&
+        (!('utmCampaign' in data) || isStr(data.utmCampaign, 100)) &&
+        data.status in ['active', 'paused', 'ended'] &&
+        (!('budget' in data) || (data.budget is number && data.budget >= 0)) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidMediaAsset(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'url', 'name', 'mimeType', 'category', 'isPublic', 'createdAt']) &&
+        data.keys().hasOnly(['id', 'tenantId', 'ownerUid', 'propertyId', 'url', 'pathname', 'name', 'mimeType', 'size', 'category', 'roomTag', 'isPrimary', 'isAiEnhanced', 'originalUrl', 'isPublic', 'sortOrder', 'createdAt']) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        (!('propertyId' in data) || isStr(data.propertyId, 128)) &&
+        isReqStr(data.url, 1000) &&
+        (!('pathname' in data) || isStr(data.pathname, 400)) &&
+        isReqStr(data.name, 200) &&
+        isReqStr(data.mimeType, 100) &&
+        (!('size' in data) || (data.size is number && data.size >= 0)) &&
+        data.category in ['photo', 'panorama360', 'floorplan', 'video', 'logo', 'banner', 'document'] &&
+        (!('roomTag' in data) || isStr(data.roomTag, 80)) &&
+        (!('isPrimary' in data) || data.isPrimary is bool) &&
+        (!('isAiEnhanced' in data) || data.isAiEnhanced is bool) &&
+        (!('originalUrl' in data) || isStr(data.originalUrl, 1000)) &&
+        data.isPublic is bool &&
+        (!('sortOrder' in data) || data.sortOrder is number) &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidAiJob(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'jobType', 'status', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['id', 'tenantId', 'ownerUid', 'propertyId', 'jobType', 'provider', 'style', 'durationSec', 'aspectRatio', 'status', 'inputImageUrls', 'outputUrl', 'errorMessage', 'createdAt', 'updatedAt']) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        (!('propertyId' in data) || isStr(data.propertyId, 128)) &&
+        data.jobType in ['photo_analysis', 'description_gen', 'video_cinematic', 'video_veo'] &&
+        (!('provider' in data) || isStr(data.provider, 60)) &&
+        (!('style' in data) || isStr(data.style, 80)) &&
+        (!('durationSec' in data) || (data.durationSec is number && data.durationSec > 0 && data.durationSec <= 120)) &&
+        (!('aspectRatio' in data) || data.aspectRatio in ['16:9', '9:16']) &&
+        data.status in ['queued', 'processing', 'completed', 'failed', 'cancelled'] &&
+        (!('inputImageUrls' in data) || isStrList(data.inputImageUrls, 20)) &&
+        (!('outputUrl' in data) || isStr(data.outputUrl, 1000)) &&
+        (!('errorMessage' in data) || isStr(data.errorMessage, 500)) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidAuditLog(data) {
+      return data.keys().hasAll(['id', 'tenantId', 'ownerUid', 'actorUid', 'action', 'entityType', 'summary', 'createdAt']) &&
+        data.keys().hasOnly(['id', 'tenantId', 'ownerUid', 'actorUid', 'actorEmail', 'action', 'entityType', 'entityId', 'summary', 'createdAt']) &&
+        isValidId(data.id) &&
+        isValidId(data.tenantId) &&
+        isValidId(data.ownerUid) &&
+        isValidId(data.actorUid) &&
+        (!('actorEmail' in data) || isStr(data.actorEmail, 200)) &&
+        isReqStr(data.action, 80) &&
+        isReqStr(data.entityType, 60) &&
+        (!('entityId' in data) || isStr(data.entityId, 128)) &&
+        isReqStr(data.summary, 400) &&
+        data.createdAt is timestamp;
+    }
+
+    // 1. Admins directory
+    match /admins/{uid} {
+      allow get: if isValidId(uid) && isAdmin();
+      allow list: if isBootstrappedAdmin();
+      allow create: if isValidId(uid) && isAdmin() && isValidAdmin(incoming()) && incoming().uid == uid && incoming().createdAt == request.time;
+      allow update, delete: if isValidId(uid) && isBootstrappedAdmin();
+    }
+
+    // 2. Users (PII isolated to owner or admin)
+    match /users/{uid} {
+      allow get: if isValidId(uid) && (isOwner(uid) || isAdmin());
+      allow list: if isBootstrappedAdmin();
+      allow create: if isValidId(uid) && isVerified() && isValidUserProfile(incoming()) &&
+        incoming().uid == uid &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isOwner(uid) && incoming().role == 'broker'));
+      allow update: if isValidId(uid) && isVerified() && isValidUserProfile(incoming()) &&
+        incoming().uid == existing().uid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time && (
+          isAdmin() ||
+          (isOwner(uid) &&
+           incoming().role == existing().role &&
+           incoming().tenantId == existing().tenantId &&
+           incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'photoURL', 'updatedAt']))
+        );
+      allow delete: if isValidId(uid) && isAdmin();
+    }
+
+    // 3. Tenants (Public storefront config & multi-tenant root)
+    match /tenants/{tenantId} {
+      allow get: if isValidId(tenantId) && (
+        existing().status == 'active' || isOwner(existing().ownerUid) || isAdmin()
+      );
+      allow list: if existing().status == 'active' || isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(tenantId) && isVerified() && isValidTenant(incoming()) &&
+        incoming().id == tenantId &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || incoming().ownerUid == request.auth.uid);
+      allow update: if isValidId(tenantId) && isVerified() && isValidTenant(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().ownerUid == existing().ownerUid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isOwner(existing().ownerUid) && incoming().diff(existing()).affectedKeys().hasOnly([
+          'brandName', 'brokerName', 'creci', 'city', 'state', 'regions',
+          'whatsapp', 'phone', 'email', 'instagramHandle', 'instagramUrl', 'logoUrl', 'faviconUrl',
+          'heroTitle', 'heroSubtitle', 'heroCtaText', 'heroImages', 'aboutHeadline', 'aboutBio',
+          'aboutPhotoUrl', 'aboutExperienceYears', 'specialties', 'differentials', 'themePreset',
+          'themeConfig', 'seoTitle', 'seoDescription', 'ga4Id', 'gtmId', 'gscVerification',
+          'googleAdsId', 'lgpdPrivacyText', 'customDomain', 'status', 'updatedAt'
+        ])));
+      allow delete: if isValidId(tenantId) && isAdmin();
+    }
+
+    // 4. Properties (Drafts private, published public)
+    match /properties/{propertyId} {
+      allow get: if isValidId(propertyId) && (
+        existing().status == 'published' || isOwner(existing().ownerUid) || isAdmin()
+      );
+      allow list: if existing().status == 'published' || isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(propertyId) && isVerified() && isValidProperty(incoming()) &&
+        incoming().id == propertyId &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isTenantOwner(incoming().tenantId) && incoming().ownerUid == request.auth.uid));
+      allow update: if isValidId(propertyId) && isVerified() && isValidProperty(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().tenantId == existing().tenantId &&
+        incoming().ownerUid == existing().ownerUid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isOwner(existing().ownerUid) && incoming().diff(existing()).affectedKeys().hasOnly([
+          'slug', 'code', 'title', 'propertyType', 'transactionType',
+          'price', 'condoFee', 'iptu', 'city', 'neighborhood', 'address', 'showExactAddress',
+          'builtArea', 'totalArea', 'bedrooms', 'suites', 'bathrooms', 'parkingSpaces',
+          'description', 'summary', 'features', 'differentials', 'coverImage', 'images',
+          'videos', 'panorama360Images', 'virtualTourType', 'status', 'featured', 'sortOrder',
+          'seoTitle', 'seoDescription', 'socialCopy', 'whatsappCopy', 'updatedAt'
+        ])));
+      allow delete: if isValidId(propertyId) && (isAdmin() || isOwner(existing().ownerUid));
+    }
+
+    // 5. Developments
+    match /developments/{developmentId} {
+      allow get: if isValidId(developmentId) && (
+        existing().status == 'published' || isOwner(existing().ownerUid) || isAdmin()
+      );
+      allow list: if existing().status == 'published' || isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(developmentId) && isVerified() && isValidDevelopment(incoming()) &&
+        incoming().id == developmentId &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isTenantOwner(incoming().tenantId) && incoming().ownerUid == request.auth.uid));
+      allow update: if isValidId(developmentId) && isVerified() && isValidDevelopment(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().tenantId == existing().tenantId &&
+        incoming().ownerUid == existing().ownerUid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isOwner(existing().ownerUid) && incoming().diff(existing()).affectedKeys().hasOnly([
+          'slug', 'name', 'developer', 'category', 'city', 'neighborhood', 'deliveryDate',
+          'priceFrom', 'description', 'technicalSpecs', 'coverImage', 'images', 'floorPlans',
+          'videos', 'status', 'featured', 'seoTitle', 'seoDescription', 'updatedAt'
+        ])));
+      allow delete: if isValidId(developmentId) && (isAdmin() || isOwner(existing().ownerUid));
+    }
+
+    // 6. Landing Pages
+    match /landingPages/{landingPageId} {
+      allow get: if isValidId(landingPageId) && (
+        existing().status == 'published' || isOwner(existing().ownerUid) || isAdmin()
+      );
+      allow list: if existing().status == 'published' || isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(landingPageId) && isVerified() && isValidLandingPage(incoming()) &&
+        incoming().id == landingPageId &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isTenantOwner(incoming().tenantId) && incoming().ownerUid == request.auth.uid));
+      allow update: if isValidId(landingPageId) && isVerified() && isValidLandingPage(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().tenantId == existing().tenantId &&
+        incoming().ownerUid == existing().ownerUid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isOwner(existing().ownerUid) && incoming().diff(existing()).affectedKeys().hasOnly([
+          'propertyId', 'slug', 'template', 'title', 'subtitle', 'heroImage', 'description',
+          'ctaText', 'accentColor', 'highlights', 'status', 'seoTitle', 'seoDescription', 'updatedAt'
+        ])));
+      allow delete: if isValidId(landingPageId) && (isAdmin() || isOwner(existing().ownerUid));
+    }
+
+    // 7. Leads (PII isolated to tenant owner / admin; public create requires LGPD consent & tenant match)
+    match /leads/{leadId} {
+      allow get: if isValidId(leadId) && (isOwner(existing().ownerUid) || isAdmin());
+      allow list: if isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(leadId) && isValidLead(incoming()) &&
+        incoming().id == leadId &&
+        incoming().lgpdConsent == true &&
+        incoming().status == 'new' &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        exists(/databases/$(database)/documents/tenants/$(incoming().tenantId)) &&
+        incoming().ownerUid == get(/databases/$(database)/documents/tenants/$(incoming().tenantId)).data.ownerUid;
+      allow update: if isValidId(leadId) && isVerified() && isValidLead(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().tenantId == existing().tenantId &&
+        incoming().ownerUid == existing().ownerUid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isOwner(existing().ownerUid) && incoming().diff(existing()).affectedKeys().hasOnly([
+          'status', 'notes', 'updatedAt'
+        ])));
+      allow delete: if isValidId(leadId) && (isAdmin() || isOwner(existing().ownerUid));
+    }
+
+    // 8. Testimonials
+    match /testimonials/{testimonialId} {
+      allow get: if isValidId(testimonialId) && (
+        existing().status == 'published' || isOwner(existing().ownerUid) || isAdmin()
+      );
+      allow list: if existing().status == 'published' || isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(testimonialId) && isVerified() && isValidTestimonial(incoming()) &&
+        incoming().id == testimonialId &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isTenantOwner(incoming().tenantId) && incoming().ownerUid == request.auth.uid));
+      allow update: if isValidId(testimonialId) && isVerified() && isValidTestimonial(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().tenantId == existing().tenantId &&
+        incoming().ownerUid == existing().ownerUid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isOwner(existing().ownerUid) && incoming().diff(existing()).affectedKeys().hasOnly([
+          'clientName', 'clientRole', 'quote', 'propertyReference', 'status', 'updatedAt'
+        ])));
+      allow delete: if isValidId(testimonialId) && (isAdmin() || isOwner(existing().ownerUid));
+    }
+
+    // 9. Analytics Events
+    match /analyticsEvents/{eventId} {
+      allow get: if isValidId(eventId) && (isOwner(existing().ownerUid) || isAdmin());
+      allow list: if isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(eventId) && isValidAnalyticsEvent(incoming()) &&
+        incoming().id == eventId &&
+        incoming().createdAt == request.time &&
+        exists(/databases/$(database)/documents/tenants/$(incoming().tenantId)) &&
+        incoming().ownerUid == get(/databases/$(database)/documents/tenants/$(incoming().tenantId)).data.ownerUid;
+      allow update, delete: if false;
+    }
+
+    // 10. Campaigns
+    match /campaigns/{campaignId} {
+      allow get: if isValidId(campaignId) && (isOwner(existing().ownerUid) || isAdmin());
+      allow list: if isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(campaignId) && isVerified() && isValidCampaign(incoming()) &&
+        incoming().id == campaignId &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isTenantOwner(incoming().tenantId) && incoming().ownerUid == request.auth.uid));
+      allow update: if isValidId(campaignId) && isVerified() && isValidCampaign(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().tenantId == existing().tenantId &&
+        incoming().ownerUid == existing().ownerUid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isOwner(existing().ownerUid) && incoming().diff(existing()).affectedKeys().hasOnly([
+          'name', 'channel', 'utmSource', 'utmMedium', 'utmCampaign', 'status', 'budget', 'updatedAt'
+        ])));
+      allow delete: if isValidId(campaignId) && (isAdmin() || isOwner(existing().ownerUid));
+    }
+
+    // 11. Media Assets
+    match /media/{mediaId} {
+      allow get: if isValidId(mediaId) && (
+        existing().isPublic == true || isOwner(existing().ownerUid) || isAdmin()
+      );
+      allow list: if existing().isPublic == true || isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(mediaId) && isVerified() && isValidMediaAsset(incoming()) &&
+        incoming().id == mediaId &&
+        incoming().createdAt == request.time &&
+        (isAdmin() || (isTenantOwner(incoming().tenantId) && incoming().ownerUid == request.auth.uid));
+      allow update: if isValidId(mediaId) && isVerified() && isValidMediaAsset(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().tenantId == existing().tenantId &&
+        incoming().ownerUid == existing().ownerUid &&
+        incoming().createdAt == existing().createdAt &&
+        (isAdmin() || (isOwner(existing().ownerUid) && incoming().diff(existing()).affectedKeys().hasOnly([
+          'propertyId', 'roomTag', 'isPrimary', 'isAiEnhanced', 'originalUrl', 'isPublic', 'sortOrder'
+        ])));
+      allow delete: if isValidId(mediaId) && (isAdmin() || isOwner(existing().ownerUid));
+    }
+
+    // 12. AI Jobs
+    match /aiJobs/{jobId} {
+      allow get: if isValidId(jobId) && (isOwner(existing().ownerUid) || isAdmin());
+      allow list: if isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(jobId) && isVerified() && isValidAiJob(incoming()) &&
+        incoming().id == jobId &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isTenantOwner(incoming().tenantId) && incoming().ownerUid == request.auth.uid));
+      allow update: if isValidId(jobId) && isVerified() && isValidAiJob(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().tenantId == existing().tenantId &&
+        incoming().ownerUid == existing().ownerUid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (isAdmin() || (isOwner(existing().ownerUid) && incoming().diff(existing()).affectedKeys().hasOnly([
+          'status', 'outputUrl', 'errorMessage', 'updatedAt'
+        ])));
+      allow delete: if isValidId(jobId) && (isAdmin() || isOwner(existing().ownerUid));
+    }
+
+    // 13. Audit Logs (Immutable)
+    match /auditLogs/{logId} {
+      allow get: if isValidId(logId) && (isOwner(existing().ownerUid) || isAdmin());
+      allow list: if isBootstrappedAdmin() || (isVerified() && existing().ownerUid == request.auth.uid);
+      allow create: if isValidId(logId) && isVerified() && isValidAuditLog(incoming()) &&
+        incoming().id == logId &&
+        incoming().actorUid == request.auth.uid &&
+        incoming().createdAt == request.time &&
+        (isAdmin() || (isTenantOwner(incoming().tenantId) && incoming().ownerUid == request.auth.uid));
+      allow update, delete: if false;
+    }
+  }
+}

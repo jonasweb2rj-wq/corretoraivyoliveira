@@ -1,0 +1,6 @@
+{
+  "name": "Ivy Oliveira Imóveis",
+  "description": "Plataforma imobiliária de alto padrão no Rio de Janeiro com assessoria arquitetônica, tour virtual interativo 360° e apresentação comercial.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
